@@ -39,7 +39,7 @@ public class CheckoutFragment extends Fragment {
         zhifubt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //这里填写支付的URL
             }
         });
 

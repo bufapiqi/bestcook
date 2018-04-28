@@ -3,6 +3,7 @@ package com.netaq.mealordering;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -10,17 +11,22 @@ import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 ;
 
@@ -32,10 +38,14 @@ public class netWorkCon {
 
     private static final String TAG = "entity.netWorkCon";
 
-    private static final String Basic_URL = "http://115.29.184.56:8090/api";// api
+    private static final String Basic_URL = "http://192.168.1.104:8080";// api
 
-    private static final String Login_URL = Basic_URL + "/user/auth";  //可以组合成不同的URL
-    private static final String Group_URL = Basic_URL + "/group";
+    private static final String Login_URL = Basic_URL + "/login";  //可以组合成不同的URL
+    private static final String SetInfo_URL = Basic_URL + "/setSelfInfo";
+    private static final String CheckCode_URL = Basic_URL + "/checkCode";
+    private static final String getCode_URL = Basic_URL + "/getCode";
+    private static final String Reserve_URL = Basic_URL + "/reserve";
+    private static final String checkOutfood_URL = Basic_URL + "/checkReserve";
 
     private Context mContext;
 
@@ -47,23 +57,36 @@ public class netWorkCon {
         if (!isNetWorkAvailableAndConnected()){
             return null;
         }
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("username",username);
-        jsonObject.addProperty("password",password);
+//        JsonObject jsonObject = new JsonObject();
+//        jsonObject.addProperty("account",username);
+//        jsonObject.addProperty("passwd",password);
+        NameValuePair account = new BasicNameValuePair("account",username);
+        NameValuePair passwd = new BasicNameValuePair("passwd",password);
+        ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
+        pairs.add(account);
+        pairs.add(passwd);
 
-        StringEntity stringEntity = new StringEntity(jsonObject.toString());
-        stringEntity.setContentType(HTTP.UTF_8);
-        stringEntity.setContentType("application/json");
+        Log.i("username",username);
+        Log.i("password",password);
+//        Log.i("input?>",jsonObject.toString());
+
+//        StringEntity stringEntity = new StringEntity(jsonObject.toString());
+//        stringEntity.setContentType(HTTP.UTF_8);
+//        stringEntity.setContentType("application/json");
+
+        HttpEntity requestEntity = new UrlEncodedFormEntity(pairs);
 
         HttpClient httpClient = new DefaultHttpClient();
 
-        HttpPost httpPost = new HttpPost(Login_URL);  //这里的login的URL需要改一下
+        HttpPost httpPost = new HttpPost(Login_URL);
 
-        httpPost.setEntity(stringEntity);
+        httpPost.setEntity(requestEntity);
 
         HttpResponse httpResponse = httpClient.execute(httpPost);
 
         int code = httpResponse.getStatusLine().getStatusCode();
+
+        Log.i("ceshi","return code : "+ code);
 
         if (code != 200){
             return null;
@@ -73,7 +96,12 @@ public class netWorkCon {
 
         int type = -1;
 
-        String jsonString = EntityUtils.toString(httpEntity);
+
+        String jsonString = "";
+        jsonString = EntityUtils.toString(httpEntity,HTTP.UTF_8);
+
+        Log.d("DDDD",jsonString);
+
         try {
             JSONObject object = new JSONObject(jsonString);
         }catch (JSONException je){
@@ -90,10 +118,10 @@ public class netWorkCon {
 
     }
 
-    public List<Waitcode> getGroups() throws IOException{  //拿到排号的list
+    public List<Waitcode> checkCode(int userid) throws IOException{  //拿到排号的list  还没测试过
         List<Waitcode> waitcodes = null;
 
-        HttpGet httpGet = new HttpGet(Group_URL);  //这里要把group的URL换掉
+        HttpGet httpGet = new HttpGet(CheckCode_URL+"?userid="+userid);
 
 //        httpGet.addHeader("Authorization", "Basic " + getToken());  这个token认证不要了
 
@@ -115,27 +143,111 @@ public class netWorkCon {
         waitcodes = gson.fromJson(a,
                 new TypeToken<List<Waitcode>>(){}.getType());
 
+        for(Waitcode ww:waitcodes){
+            Log.i("waitcode",ww.getName()+"  "+ww.getTime());
+        }
+
         return waitcodes;
     }
+
+    public List<Reserve> checkReserve(int userid) throws IOException{
+        List<Reserve> reserves = null;
+
+        HttpGet httpGet = new HttpGet(checkOutfood_URL+"?userid="+userid);
+
+        HttpClient httpClient = new DefaultHttpClient();
+
+        HttpResponse httpResponse = httpClient.execute(httpGet);
+
+        int code = httpResponse.getStatusLine().getStatusCode();
+
+        if (code != 200){
+            return null;
+        }
+
+        Gson gson = new Gson();
+
+        String a = EntityUtils.toString(httpResponse.getEntity());
+        Log.e(TAG,a);
+
+        reserves = gson.fromJson(a,
+                new TypeToken<List<Reserve>>(){}.getType());
+
+        return reserves;
+    }
+
+    public boolean reserve(String time,int mans,String name,String phone,String special,int userid)throws IOException{
+
+        String URL = Reserve_URL+"?time="+URLEncoder.encode(time,"UTF-8")+"&mans="+mans+"&name="+name+"&phone="+phone+"&special="+special+"&userid="+userid;
+        HttpGet httpGet = new HttpGet(URL);
+
+        HttpClient httpClient = new DefaultHttpClient();
+
+        HttpResponse httpResponse = httpClient.execute(httpGet);
+
+        int code = httpResponse.getStatusLine().getStatusCode();
+
+        if (code != 200){
+            return false;
+        }
+
+        Gson gson = new Gson();
+
+        String a = EntityUtils.toString(httpResponse.getEntity());
+
+        return Boolean.getBoolean(a);
+    }
+
+    public String getCode(String time,int mans,String name,String phone,int userid) throws IOException{  //排号的url
+
+        HttpGet httpGet = new HttpGet(getCode_URL+"?time="+time+"&mans="+mans+"&name="+name+"&phone="+phone+"&userid="+userid);
+
+        HttpClient httpClient = new DefaultHttpClient();
+
+        HttpResponse httpResponse = httpClient.execute(httpGet);
+
+        int code = httpResponse.getStatusLine().getStatusCode();
+
+        if (code != 200){
+            return null;
+        }
+
+        Gson gson = new Gson();
+
+        String a = EntityUtils.toString(httpResponse.getEntity());
+
+        return a;
+    }
+
 //
-//    public List<Student> getStudents(int groupId) throws IOException{
-//        List<Student> studentList = null;
-//        HttpClient httpClient = new DefaultHttpClient();
-//        HttpGet httpGet = new HttpGet(Group_URL + "/" + groupId + "/students");
-//        httpGet.addHeader("Authorization", "Basic " + getToken());
-//        HttpResponse httpResponse = httpClient.execute(httpGet);
-//
-//        int code = httpResponse.getStatusLine().getStatusCode();
-//        if (code != 200){
-//            return null;
-//        }
-//        Gson gson = new Gson();
-//        String jsonString = EntityUtils.toString(httpResponse.getEntity());
-//        Log.e(TAG, jsonString);
-//        studentList = gson.fromJson(jsonString,
-//                new TypeToken<List<Student>>(){}.getType());
-//        return studentList;
-//    }
+    public int UpdateUser(String userInfo) throws IOException{
+
+        StringEntity stringEntity = new StringEntity(userInfo);
+        stringEntity.setContentType(HTTP.UTF_8);
+        stringEntity.setContentType("application/json");
+
+        HttpClient httpClient = new DefaultHttpClient();
+
+        HttpPost httpPost = new HttpPost(SetInfo_URL);
+
+        httpPost.setEntity(stringEntity);
+
+        HttpResponse httpResponse = httpClient.execute(httpPost);
+
+        int code = httpResponse.getStatusLine().getStatusCode();
+
+        if (code != 200){
+            return -1;
+        }
+
+        HttpEntity httpEntity = httpResponse.getEntity();
+
+        int type = -1;
+
+        String jsonString = EntityUtils.toString(httpEntity);
+
+        return Integer.parseInt(jsonString);
+    }
 //
 //    public List<Test> getTests(int courseId, String type) throws IOException{
 //        List<Test> testList = null;

@@ -33,6 +33,7 @@ import com.netaq.mealordering.fragments.CartFragment;
 import com.netaq.mealordering.fragments.InformationFragment;
 import com.netaq.mealordering.fragments.ItemsFragment;
 import com.netaq.mealordering.fragments.MainMenuFragment;
+import com.netaq.mealordering.fragments.OrderMealFragment;
 import com.netaq.mealordering.fragments.PaihaoFragment;
 import com.netaq.mealordering.fragments.PersonalFragment;
 
@@ -244,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 ft.replace(R.id.content_main,fragment);
                 ft.commit();
 
-                toolbarTtile.setText("在线点餐");break;
+                toolbarTtile.setText("在线外卖");break;
             case 6:
                 Fragment PerFragment = new PersonalFragment();
                 FragmentTransaction pft = getSupportFragmentManager().beginTransaction();
@@ -260,6 +261,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 yudingp.commit();
 
                 toolbarTtile.setText("在线排号");break;
+            case 8:
+                Fragment dingcanf = new OrderMealFragment();
+                FragmentTransaction dingcangp = getSupportFragmentManager().beginTransaction();
+                dingcangp.replace(R.id.content_main,dingcanf);
+                dingcangp.commit();
+
+                toolbarTtile.setText("在线订餐");break;
 
         }
 

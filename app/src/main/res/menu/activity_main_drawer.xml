@@ -18,10 +18,10 @@
     android:title="我的账户" />
 
     <item
-    android:id="@+id/OrderSeat"
-    android:icon="@mipmap/sandwich_icon"
-    android:orderInCategory="7"
-    android:title="在线预订" />
+        android:id="@+id/OrderSeat"
+        android:icon="@mipmap/sandwich_icon"
+        android:orderInCategory="7"
+        android:title="在线排号" />
 
 
     <!--<item-->
@@ -50,7 +50,12 @@
         android:id="@+id/main_menu"
         android:icon="@mipmap/drink_icon"
         android:orderInCategory="5"
-        android:title="在线点餐" />
+        android:title="在线外卖" />
+    <item
+        android:id="@+id/OrderMeal"
+        android:icon="@mipmap/dessert_icon"
+        android:orderInCategory="8"
+        android:title="在线订餐" />
 
 
 </menu>

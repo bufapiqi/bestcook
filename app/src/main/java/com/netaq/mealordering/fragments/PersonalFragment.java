@@ -1,5 +1,8 @@
 package com.netaq.mealordering.fragments;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +14,14 @@ import android.view.ViewGroup;
 import android.os.Bundle;
 
 import com.netaq.mealordering.R;
+
+import android.net.Uri;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 
 /**
  * Created by RABOOK on 2018/4/26.
@@ -45,8 +56,25 @@ public class PersonalFragment extends android.support.v4.app.Fragment{
         //这里获得user的信息
         //这里获得user的信息
 
-        if(true){ //已经登录了
-            Fragment userBookingFragment = new UserBookingFragment();
+        Intent intent = getActivity().getIntent();
+        Bundle bundle = intent.getExtras();
+        boolean isLogin = false;
+        if(bundle != null && bundle.containsKey("username")){
+            isLogin = true;
+        }
+        if(isLogin){ //已经登录了
+
+            userName.setText(bundle.getString("username"));
+
+            try {
+                Bitmap bitmap = getBitmap(bundle.getString("photoLink"));
+                userPhoto.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            Fragment userBookingFragment = new UserBookingFragment(this);
             FragmentTransaction nft = getChildFragmentManager().beginTransaction();
             nft.add(R.id.bottom_info,userBookingFragment).commit();
         }else{ //没有登录
@@ -58,6 +86,24 @@ public class PersonalFragment extends android.support.v4.app.Fragment{
 
         return view;
 
+    }
+
+    public Bitmap getBitmap(String path) throws IOException {
+        try {
+            URL url = new URL(path);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(5000);
+            conn.setRequestMethod("GET");
+            if (conn.getResponseCode() == 200) {
+                InputStream inputStream = conn.getInputStream();
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                return bitmap;
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

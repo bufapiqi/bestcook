@@ -7,10 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
-
-import com.netaq.mealordering.R;
+import android.widget.ImageButton;import com.netaq.mealordering.R;
 import com.netaq.mealordering.activity.MainActivity;
+
+
 
 /**
  * Created by Netaq on 10/18/2017.
