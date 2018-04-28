@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        >
+
+
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:textStyle="bold"
+
+        android:id="@+id/snacks_btn"
+        android:text="小   吃"
+        android:textColor="@android:color/white"
+        android:layout_marginRight="5dp"
+        android:background="@mipmap/snacks_img"/>
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:id="@+id/starters_btn"
+        android:text="凉   菜"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:background="@mipmap/starter_img"/>
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+
+
+        <Button
+            android:id="@+id/steaks_btn"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:text="主   食"
+            android:textStyle="bold"
+
+            android:textColor="@android:color/white"
+            android:layout_marginRight="5dp"
+            android:background="@mipmap/steaks_hd"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+
+        <Button
+            android:layout_marginRight="5dp"
+            android:background="@mipmap/sandwiches_img"
+            android:layout_width="160dp"
+            android:textColor="@android:color/white"
+            android:layout_height="160dp"
+            android:textStyle="bold"
+
+            android:id="@+id/sandwiches_btn"
+            android:text="水   果"/>
+        <Button
+            android:layout_marginRight="5dp"
+            android:background="@mipmap/drinks_img"
+            android:layout_width="160dp"
+            android:textStyle="bold"
+
+            android:layout_height="160dp"
+            android:textColor="@android:color/white"
+            android:id="@+id/beverages_btn"
+            android:text="饮   料"/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:id="@+id/cart_layout"
+    android:layout_marginTop="45dp"
+    android:layout_height="match_parent">
+
+ <LinearLayout
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:layout_weight="1"
+     android:orientation="vertical">
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/cart_list_rv"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="5dp"
+      android:layout_marginRight="5dp"
+      android:layout_marginTop="8dp">
+
+  </android.support.v7.widget.RecyclerView>
+ </LinearLayout>
+
+ <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_weight="1"-->
+    <!--android:orientation="vertical"-->
+    <!--android:layout_marginTop="25dp">-->
+ <!--<TextView-->
+     <!--android:layout_width="wrap_content"-->
+     <!--android:layout_height="wrap_content"-->
+     <!--android:id="@+id/sub_total_tv"-->
+     <!--android:text="Subtotal:"-->
+     <!--android:layout_marginLeft="15dp"-->
+     <!--android:layout_marginTop="10dp"-->
+     <!--android:textSize="16dp"-->
+     <!--android:textStyle="bold"-->
+
+     <!--/>-->
+ <!--<TextView-->
+     <!--android:layout_width="wrap_content"-->
+     <!--android:layout_height="wrap_content"-->
+     <!--android:layout_marginRight="20dp"-->
+     <!--android:text="45 dhs"-->
+
+     <!--android:layout_marginTop="5dp"-->
+     <!--android:layout_marginStart="285dp"-->
+
+     <!--android:id="@+id/sub_total_price"-->
+
+     <!--/>-->
+
+ <!--<TextView-->
+     <!--android:id="@+id/delivery_tv"-->
+     <!--android:layout_width="wrap_content"-->
+     <!--android:layout_height="wrap_content"-->
+     <!--android:text="Delivery charge:"-->
+     <!--android:layout_marginLeft="15dp"-->
+     <!--android:layout_marginTop="5dp"-->
+     <!--android:textSize="16dp"-->
+     <!--android:textStyle="bold"-->
+
+
+     <!--/>-->
+
+ <!--<TextView-->
+     <!--android:id="@+id/delivery_tax"-->
+     <!--android:layout_width="wrap_content"-->
+     <!--android:layout_height="wrap_content"-->
+     <!--android:text="10 dhs"-->
+     <!--android:layout_marginTop="5dp"-->
+     <!--android:layout_marginStart="285dp"-->
+     <!--android:textSize="16dp"-->
+     <!--android:textStyle="bold"-->
+     <!--android:layout_marginEnd="20dp"-->
+
+     <!--/>-->
+
+ <!--<View-->
+     <!--android:layout_width="wrap_content"-->
+     <!--android:layout_height="2dp"-->
+     <!--android:layout_gravity="center_horizontal"-->
+     <!--android:layout_marginTop="2dp"-->
+     <!--android:layout_marginLeft="5dp"-->
+     <!--android:layout_marginRight="5dp"-->
+     <!--android:background="@color/colorAccent" />-->
+
+
+
+ <!--<TextView-->
+     <!--android:layout_width="wrap_content"-->
+     <!--android:layout_height="wrap_content"-->
+     <!--android:id="@+id/total_payment_tv"-->
+     <!--android:text="Total charge:"-->
+     <!--android:textSize="16dp"-->
+     <!--android:textStyle="bold"-->
+     <!--android:layout_marginLeft="15dp"-->
+     <!--android:layout_marginTop="15dp"-->
+
+     <!--/>-->
+ <!--<TextView-->
+     <!--android:layout_width="wrap_content"-->
+     <!--android:layout_height="wrap_content"-->
+     <!--android:text="55 dhs"-->
+     <!--android:layout_marginRight="20dp"-->
+     <!--android:id="@+id/total_charge"-->
+     <!--android:textSize="16dp"-->
+     <!--android:textStyle="bold"-->
+     <!--android:layout_marginStart="285dp"-->
+     <!--android:layout_marginTop="1dp"-->
+
+
+     <!--/>-->
+ <!--<View-->
+     <!--android:layout_width="wrap_content"-->
+     <!--android:layout_height="2dp"-->
+     <!--android:layout_gravity="center_horizontal"-->
+     <!--android:layout_marginTop="5dp"-->
+     <!--android:layout_marginLeft="5dp"-->
+     <!--android:layout_marginRight="5dp"-->
+     <!--android:background="@color/colorAccent" />-->
+
+
+ <Button
+     android:id="@+id/check_out_btn"
+     android:layout_width="match_parent"
+
+     android:layout_height="wrap_content"
+     android:layout_gravity="center_horizontal"
+     android:layout_marginBottom="5dp"
+     android:layout_marginTop="10dp"
+     android:background="@color/colorPrimary"
+     android:text="确认订单"
+     android:textColor="@android:color/white"
+
+     />
+
+<!--</LinearLayout>-->
+
+</LinearLayout>
