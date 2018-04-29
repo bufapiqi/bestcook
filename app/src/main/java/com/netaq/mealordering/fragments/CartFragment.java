@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.netaq.mealordering.OutFoodVO;
 import com.netaq.mealordering.R;
 import com.netaq.mealordering.activity.ChekoutActivity;
 import com.netaq.mealordering.activity.MainActivity;
@@ -94,10 +96,37 @@ public class CartFragment extends Fragment implements CartAdapter.onQuantityModi
             {
                 @Override
                 public void onClick(View view)
-                { Intent intentinfo ;
+                {
+                    Intent intentinfo ;
                     intentinfo =new Intent(getActivity().getApplication(), ChekoutActivity.class);
+
+                    Intent intent = getActivity().getIntent();
+                    Bundle b = intent.getExtras();
+
+                    String username = b.getString("username");
+                    int userid = b.getInt("userid");
+                    String password = b.getString("password");
+                    String photoLink = b.getString("photoLink");
+                    String address = b.getString("address");
+
+                    intentinfo.putExtra("username",username);
+                    intentinfo.putExtra("userid",userid);
+                    intentinfo.putExtra("password",password);
+                    intentinfo.putExtra("photoLink",photoLink);
+                    intentinfo.putExtra("address",address);
+
                     intentinfo.putExtra("subPrice",subPrice);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("orderlist",orderList);
+//                    bundle.putString("subPrice",""+subPrice);
+                    intentinfo.putExtras(bundle);
                     // Toast.makeText(view.getContext(), "Order is placed Successfully.", Toast.LENGTH_LONG).show();
+
+//                    OutFoodVO ourfood = new OutFoodVO(); // 新建一个outfoodVO
+
+
+
+
                 startActivity(intentinfo);
 
                 }

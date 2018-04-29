@@ -68,7 +68,11 @@ public class PersonalFragment extends android.support.v4.app.Fragment{
 
             try {
                 Bitmap bitmap = getBitmap(bundle.getString("photoLink"));
-                userPhoto.setImageBitmap(bitmap);
+                if(bitmap==null){
+                    userPhoto.setImageResource(R.mipmap.ic_launcher_round);
+                }else{
+                    userPhoto.setImageBitmap(bitmap);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

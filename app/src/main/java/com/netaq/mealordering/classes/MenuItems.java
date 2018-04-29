@@ -1,12 +1,13 @@
 package com.netaq.mealordering.classes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Deena on 03/10/2017.
  */
 
-public class MenuItems
+public class MenuItems implements Serializable
 {
 
 
@@ -17,6 +18,10 @@ public class MenuItems
     public String image;
     public int itemQuantity=0;
     public static ArrayList<MenuItems> orderList =new ArrayList<MenuItems>();
+
+    public MenuItems() {
+        super();
+    }
 
     public MenuItems(int id, int category_id, String name, int price, String image, int itemQuantity) {
         this.id = id;

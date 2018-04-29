@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.netaq.mealordering.OutFoodVO;
 import com.netaq.mealordering.R;
 import com.netaq.mealordering.Reserve;
 import com.netaq.mealordering.Waitcode;
@@ -95,6 +96,12 @@ public class UserBookingFragment extends android.support.v4.app.Fragment{
             @Override
             public void onClick(View v) {
 
+                Intent intent = getActivity().getIntent();
+                Bundle bundle = intent.getExtras();
+                int a = bundle.getInt("userid");
+
+                getOutFoodTask get = new getOutFoodTask();
+                get.execute(a);
 
             }
         });
@@ -102,6 +109,42 @@ public class UserBookingFragment extends android.support.v4.app.Fragment{
 
         return view;
 
+    }
+
+
+    private class getOutFoodTask extends AsyncTask<Integer,Void,List<OutFoodVO>>{
+
+        @Override
+        protected List<OutFoodVO> doInBackground(Integer... integers) {
+
+            netWorkCon net = new netWorkCon(getActivity());
+
+            List<OutFoodVO> outfoods = null;
+
+            try{
+                outfoods = net.checkOutfood(integers[0]);
+            }catch (IOException e){
+                e.printStackTrace();
+            }finally {
+
+            }
+
+
+            return outfoods;
+        }
+
+        @Override
+        protected void onPostExecute(List<OutFoodVO> outFoodVOS) {
+//            super.onPostExecute(outFoodVOS);
+
+            if(outFoodVOS==null){
+                return ;
+            }
+
+            wodeoutfoodFragment outf = new wodeoutfoodFragment(outFoodVOS);
+            FragmentTransaction ft = person.getChildFragmentManager().beginTransaction();
+            ft.replace(R.id.bottom_info,outf).commit();
+        }
     }
 
 

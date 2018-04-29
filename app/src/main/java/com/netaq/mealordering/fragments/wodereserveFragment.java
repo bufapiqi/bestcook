@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.netaq.mealordering.R;
+import com.netaq.mealordering.RecycleViewDivider;
 import com.netaq.mealordering.Reserve;
 import com.netaq.mealordering.adapters.paihaoAdapters;
 import com.netaq.mealordering.adapters.reserveAdapters;
@@ -50,6 +51,9 @@ public class wodereserveFragment extends android.support.v4.app.Fragment {
 
         reserve = view.findViewById(R.id.reserve_list_rv);
         reserve.setLayoutManager(new LinearLayoutManager(getActivity()));
+        reserve.addItemDecoration(new RecycleViewDivider(
+                getContext(), LinearLayoutManager.HORIZONTAL, 15, getResources().getColor(R.color.colorPrimary)
+        ));
 
 //        List<Reserve> temp = new ArrayList<Reserve>();
 //        Reserve r = new Reserve();

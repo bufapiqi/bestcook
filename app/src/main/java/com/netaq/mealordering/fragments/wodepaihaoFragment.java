@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.netaq.mealordering.R;
+import com.netaq.mealordering.RecycleViewDivider;
 import com.netaq.mealordering.Reserve;
 import com.netaq.mealordering.Waitcode;
 import com.netaq.mealordering.adapters.paihaoAdapters;
@@ -52,6 +53,10 @@ public class wodepaihaoFragment extends android.support.v4.app.Fragment{
         paihao = view.findViewById(R.id.paihao_list_rv);
 //        paihao.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         paihao.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        paihao.addItemDecoration(new RecycleViewDivider(
+                getContext(), LinearLayoutManager.HORIZONTAL, 15, getResources().getColor(R.color.colorPrimary)
+        ));
 
 //        Waitcode w = new Waitcode();
 //        w.setId(1);

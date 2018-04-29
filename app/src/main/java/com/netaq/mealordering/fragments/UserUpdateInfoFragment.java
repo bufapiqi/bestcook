@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.netaq.mealordering.BasicUser;
 import com.netaq.mealordering.R;
+import com.netaq.mealordering.activity.MainActivity;
 import com.netaq.mealordering.netWorkCon;
 
 import java.io.IOException;
@@ -74,12 +75,12 @@ public class UserUpdateInfoFragment extends android.support.v4.app.Fragment{
                 final String shouhuo = e2.getText().toString();
                 final String mima = e3.getText().toString();
                 String username = bundle.getString("username");
-                String userid = bundle.getString("userid");
+                int userid = bundle.getInt("userid");
                 String photo = bundle.getString("photoLink");
 
                 BasicUser user = new BasicUser();
                 user.setAccount(username);
-                user.setId(Integer.parseInt(userid));
+                user.setId(userid);
                 user.setPassword(mima);
                 user.setAddess(shouhuo);
                 user.setPhotoLink(photo);
@@ -101,8 +102,8 @@ public class UserUpdateInfoFragment extends android.support.v4.app.Fragment{
             @Override
             public void onClick(View v) {
                 //这里退出登录
-
-
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
             }
         });
 

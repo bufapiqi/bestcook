@@ -79,11 +79,59 @@ public class LoginFragment extends android.support.v4.app.Fragment{
         regButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final String name = usernameEdit.getText().toString();
+                final String pass = passwordEdit.getText().toString();
 
+                Log.i("这里能读到吗",name);
+                Log.i("这里能读到吗ssss",pass);
+
+                //判断用户名和密码是否为空
+                if(TextUtils.isEmpty(name.trim())||TextUtils.isEmpty(pass.trim())){
+                    Toast.makeText(getActivity(),"用户名或密码不能为空！请重新输入",Toast.LENGTH_SHORT).show();
+                }else {
+
+                    Log.i("jijijijsdsdsadsa",name);
+                    new RegisterTask().execute(name,pass);
+
+                }
             }
         });
 
         return view;
+    }
+
+    private class RegisterTask extends  AsyncTask<String,Void,BasicUser>{
+
+        @Override
+        protected BasicUser doInBackground(String... strings) {
+            netWorkCon net = new netWorkCon(getActivity());
+            BasicUser user = null;
+            try{
+                user = net.register(strings[0],strings[1]);
+            }catch (IOException e){
+                e.printStackTrace();
+            }finally {
+
+            }
+            return user;
+        }
+
+        @Override
+        protected void onPostExecute(BasicUser basicUser) {
+//            super.onPostExecute(basicUser);
+            if(basicUser == null){
+                Toast.makeText(getActivity(),"注册失败！已经有相同的账户",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Toast.makeText(getActivity(),"注册成功！已经自动登录",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            intent.putExtra("username",basicUser.getAccount());
+            intent.putExtra("userid",basicUser.getId());
+            intent.putExtra("password",basicUser.getPassword());
+            intent.putExtra("photoLink",basicUser.getPhotoLink());
+            intent.putExtra("address",basicUser.getAddess());
+            startActivity(intent);
+        }
     }
 
     private class LoginTask extends AsyncTask<String,Void,BasicUser>{

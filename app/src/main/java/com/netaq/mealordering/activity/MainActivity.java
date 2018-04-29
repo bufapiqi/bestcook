@@ -1,6 +1,7 @@
 package com.netaq.mealordering.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -240,12 +241,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                loadFragment(4);
 //                break;
             case 5:
-                Fragment fragment =  new MainMenuFragment();
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.content_main,fragment);
-                ft.commit();
+                if(isSignin()){
+                    Fragment fragment =  new MainMenuFragment();
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.content_main,fragment);
+                    ft.commit();
 
-                toolbarTtile.setText("在线外卖");break;
+                    toolbarTtile.setText("在线外卖");break;
+                }else{
+                    Fragment PerFragment = new PersonalFragment();
+                    FragmentTransaction pft = getSupportFragmentManager().beginTransaction();
+                    pft.replace(R.id.content_main,PerFragment);
+                    pft.commit();
+
+                    toolbarTtile.setText("个人信息");break;
+                }
+
             case 6:
                 Fragment PerFragment = new PersonalFragment();
                 FragmentTransaction pft = getSupportFragmentManager().beginTransaction();
@@ -255,23 +266,51 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 toolbarTtile.setText("个人信息");break;
 
             case 7:
-                Fragment yudingf = new PaihaoFragment();
-                FragmentTransaction yudingp = getSupportFragmentManager().beginTransaction();
-                yudingp.replace(R.id.content_main,yudingf);
-                yudingp.commit();
+                if(isSignin()){
+                    Fragment yudingf = new PaihaoFragment();
+                    FragmentTransaction yudingp = getSupportFragmentManager().beginTransaction();
+                    yudingp.replace(R.id.content_main,yudingf);
+                    yudingp.commit();
 
-                toolbarTtile.setText("在线排号");break;
+                    toolbarTtile.setText("在线排号");break;
+                }else{
+                    Fragment PerFragment1 = new PersonalFragment();
+                    FragmentTransaction pft1 = getSupportFragmentManager().beginTransaction();
+                    pft1.replace(R.id.content_main,PerFragment1);
+                    pft1.commit();
+
+                    toolbarTtile.setText("个人信息");break;
+                }
+
             case 8:
-                Fragment dingcanf = new OrderMealFragment();
-                FragmentTransaction dingcangp = getSupportFragmentManager().beginTransaction();
-                dingcangp.replace(R.id.content_main,dingcanf);
-                dingcangp.commit();
+                if(isSignin()){
+                    Fragment dingcanf = new OrderMealFragment();
+                    FragmentTransaction dingcangp = getSupportFragmentManager().beginTransaction();
+                    dingcangp.replace(R.id.content_main,dingcanf);
+                    dingcangp.commit();
 
-                toolbarTtile.setText("在线订餐");break;
+                    toolbarTtile.setText("在线订餐");break;
+                }else{
+                    Fragment PerFragment2 = new PersonalFragment();
+                    FragmentTransaction pft2 = getSupportFragmentManager().beginTransaction();
+                    pft2.replace(R.id.content_main,PerFragment2);
+                    pft2.commit();
 
+                    toolbarTtile.setText("个人信息");break;
+                }
         }
 
         return false;
+    }
+
+    private boolean isSignin(){
+        Intent i = getIntent();
+        Bundle bundle = i.getExtras();
+        boolean isLogin = false;
+        if(bundle != null && bundle.containsKey("username")){
+            isLogin = true;
+        }
+        return isLogin;
     }
 
     void loadFragment(int index){  //加载Fragement

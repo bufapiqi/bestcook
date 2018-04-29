@@ -13,25 +13,27 @@
         android:layout_height="150dp"
         android:id="@+id/info_logo"
         android:src="@mipmap/call_icon"/>
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/location_tv"
-        android:gravity="center"
-        android:text="Availabe in UAE, Kuwait, and KSA "
-        />
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="解释权归本店所有" />
+
+    <TextView
         android:id="@+id/site_tv"
-        android:gravity="center"
-        android:text="UAE: Available in AbuDhabi, Dubai, Sharjah, and Ajman"
-        android:layout_marginTop="12dp"/>
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/phone_tv"
+        android:layout_marginTop="12dp"
         android:gravity="center"
-        android:text="Call Us on : 02458658"/>
+        android:text="如果有不满意的，请拨打下面的电话向我们投诉" />
+
+    <TextView
+        android:id="@+id/phone_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="谢谢光临：02458658" />
 
 </LinearLayout>

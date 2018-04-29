@@ -57,7 +57,7 @@ public class ItemsFragment extends Fragment {
 //
             case 0:
                 Perfecto.with(getContext())
-                        .fromUrl(" https://api.myjson.com/bins/18sabx")
+                        .fromUrl(" http://192.168.1.104:8080/getFood?storeid=1")  //https://api.myjson.com/bins/18sabx
                         .ofTypeGet()
                         .connect(new OnNetworkRequest() {
                             @Override

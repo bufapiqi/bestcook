@@ -14,14 +14,14 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/xuhaolabel"
+                android:id="@+id/outfoodNamelabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="序         号：" />
+                android:text="姓         名：" />
 
             <TextView
-                android:id="@+id/xuhao"
+                android:id="@+id/outfoodname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -34,11 +34,11 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/chifanlabel"
+                android:id="@+id/outfoodaddressLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="吃饭人数：" />
+                android:text="收货地址：" />
 
         </LinearLayout>
 
@@ -48,14 +48,14 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/yudingxingminglabel"
+                android:id="@+id/outfoodreachtimelabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="预订姓名：" />
+                android:text="送达时间：" />
 
             <TextView
-                android:id="@+id/yudingxingming"
+                android:id="@+id/outfoodreachtime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -68,14 +68,14 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/yudingdianhualabel"
+                android:id="@+id/accountlabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="预订电话：" />
+                android:text="合          计：" />
 
             <TextView
-                android:id="@+id/yudingdianhua"
+                android:id="@+id/account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -88,14 +88,14 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/yudingshijianlabei"
+                android:id="@+id/beizhubeizhulabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="预订时间：" />
+                android:text="备           注：" />
 
             <TextView
-                android:id="@+id/yudingshijian"
+                android:id="@+id/beizhubeizhu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
