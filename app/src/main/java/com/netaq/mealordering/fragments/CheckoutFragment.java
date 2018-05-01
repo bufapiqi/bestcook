@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,10 @@ import com.netaq.mealordering.netWorkCon;
 import com.netaq.mealordering.orderVO;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -35,8 +39,8 @@ public class CheckoutFragment extends Fragment {
     TextView subTotal, deliveryTotal, totalCharge,toolbarTtile;
     Button zhifubt;
 
-    TextView dizhilabel,peisonglabel,beizhulabel;
-    EditText dizhi,peisong,beizhu;
+    TextView dizhilabel,peisonglabel,beizhulabel,checkphonelabel;
+    EditText dizhi,peisong,beizhu,checkphone;
 
     View view;
     @Nullable
@@ -52,12 +56,14 @@ public class CheckoutFragment extends Fragment {
         dizhilabel = view.findViewById(R.id.peisonglabel);
         peisonglabel = view.findViewById(R.id.reachTimeLabel);
         beizhulabel = view.findViewById(R.id.beizhilabel);
+        checkphonelabel = view.findViewById(R.id.checkphonelabel);
 
         Log.i("有没有到这里怕","点击到这里了没有");
 
         dizhi = view.findViewById(R.id.peisongEdit);
         peisong = view.findViewById(R.id.reachTimeEdit);
         beizhu = view.findViewById(R.id.beizhuEdit);
+        checkphone = view.findViewById(R.id.checkoutphoneEdit);
 
         subTotal.setText("0 Dhs.");
         totalCharge.setText("0 Dhs.");
@@ -88,7 +94,9 @@ public class CheckoutFragment extends Fragment {
                 OutFoodVO outfood = new OutFoodVO();
                 outfood.setUserid(bundle.getInt("userid"));
                 outfood.setFoodlist(resItems);
-                outfood.setPayway("在线支付");
+                outfood.setPayway("线上支付");
+                outfood.setName(bundle.getString("username"));
+                outfood.setPhone(checkphone.getText().toString());
                 outfood.setAddress(dizhi.getText().toString()+""); //地址
                 outfood.setReachtime(peisong.getText().toString()+"");//送达时间
                 outfood.setAccount(""+total); //合计费用
@@ -96,11 +104,31 @@ public class CheckoutFragment extends Fragment {
                 outfood.setDescription(beizhu.getText().toString()); // 备注
 
                 Gson g = new Gson();
-                String outf = g.toJson(outfood);
+                String outf = "";
+                try {
+                    outf = URLEncoder.encode(g.toJson(outfood),"UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+                String a1 = checkphone.getText().toString();
+                String a2 = peisong.getText().toString();
+                String a3 = dizhi.getText().toString();
+
 
                 //这里task
-                OutFoodTask outFood = new OutFoodTask();
-                outFood.execute(outf);
+                if(TextUtils.isEmpty(a1.trim())){
+                    Toast.makeText(getActivity(),"收货电话不能为空！",Toast.LENGTH_SHORT).show();
+                }else if(TextUtils.isEmpty(a2.trim())){
+                    Toast.makeText(getActivity(),"配送时间不能为空！",Toast.LENGTH_SHORT).show();
+                }else if(TextUtils.isEmpty(a3.trim())){
+                    Toast.makeText(getActivity(),"收货地址不能为空！",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity(),outf,Toast.LENGTH_SHORT).show();
+                    OutFoodTask outFood = new OutFoodTask();
+                    outFood.execute(outf);
+                }
+
 
             }
         });
