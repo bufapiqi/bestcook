@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,14 +73,24 @@ public class OrderMealFragment extends android.support.v4.app.Fragment{
 
                 String name = bundle.getString("username");
                 int userid = bundle.getInt("userid");
-                int mans = Integer.parseInt(dingcanrenshu);
+                int mans = 0;
+                if(!TextUtils.isEmpty(String.valueOf(dingcanrenshu))){
+                    mans = Integer.parseInt(dingcanrenshu);
+                }
                 String date = year+"/"+month+"/"+day+" "+h+":"+m+":"+"00";
                 final String speciall = special.getText().toString();
                 final String phone = phoneEdit.getText().toString();
 
-                //这里异步任务
-                ReserveTask res = new ReserveTask();
-                res.execute(date,String.valueOf(mans),name,phone,speciall,String.valueOf(userid));
+                if(TextUtils.isEmpty(String.valueOf(dingcanrenshu))){
+                    Toast.makeText(getActivity(),"输入人数不能为空！",Toast.LENGTH_SHORT).show();
+                }else if(TextUtils.isEmpty(phone)){
+                    Toast.makeText(getActivity(),"电话号码不能为空！",Toast.LENGTH_SHORT).show();
+                }else{
+
+                    //这里异步任务
+                    ReserveTask res = new ReserveTask();
+                    res.execute(date,String.valueOf(mans),name,phone,speciall,String.valueOf(userid));
+                }
 
             }
         });
@@ -115,6 +126,8 @@ public class OrderMealFragment extends android.support.v4.app.Fragment{
                 Toast.makeText(getActivity(),"订餐失败！",Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(getActivity(),"订餐成功！",Toast.LENGTH_SHORT).show();
+                Intent i = getActivity().getIntent();
+                startActivity(i);
             }  //这里可能需要改一下
 
 //            wodereserveFragment re = new wodereserveFragment(reserves);

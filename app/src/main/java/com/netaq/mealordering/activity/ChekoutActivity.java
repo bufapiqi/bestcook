@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,8 +40,8 @@ public class ChekoutActivity extends AppCompatActivity {
 
     Button zhifubt;
 
-    TextView dizhilabel,peisonglabel,beizhulabel;
-    EditText dizhi,peisong,beizhu;
+    TextView dizhilabel,peisonglabel,beizhulabel,checkphonelabel;
+    EditText dizhi,peisong,beizhu,checkphone;
 
 
     @Override
@@ -74,12 +75,14 @@ public class ChekoutActivity extends AppCompatActivity {
         dizhilabel = findViewById(R.id.peisonglabel);
         peisonglabel = findViewById(R.id.reachTimeLabel);
         beizhulabel = findViewById(R.id.beizhilabel);
+        checkphonelabel = findViewById(R.id.checkphonelabel);
 
         Log.i("有没有到这里怕","点击到这里了没有");
 
         dizhi = findViewById(R.id.peisongEdit);
         peisong = findViewById(R.id.reachTimeEdit);
         beizhu = findViewById(R.id.beizhuEdit);
+        checkphone = findViewById(R.id.checkoutphoneEdit);
 
         zhifubt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +112,7 @@ public class ChekoutActivity extends AppCompatActivity {
                 outfood.setFoodlist(resItems);
                 outfood.setPayway("线上支付");
                 outfood.setName(bundle.getString("username"));
+                outfood.setPhone(checkphone.getText().toString());
                 outfood.setAddress(dizhi.getText().toString()+""); //地址
                 outfood.setReachtime(peisong.getText().toString()+"");//送达时间
                 outfood.setAccount(""+total); //合计费用
@@ -118,9 +122,26 @@ public class ChekoutActivity extends AppCompatActivity {
                 Gson g = new Gson();
                 String outf = g.toJson(outfood);
 
+                String a1 = checkphone.getText().toString();
+                String a2 = peisong.getText().toString();
+                String a3 = dizhi.getText().toString();
+
                 //这里task
-                OutFoodTask outFood = new OutFoodTask();
-                outFood.execute(outf);
+//                OutFoodTask outFood = new OutFoodTask();
+//                outFood.execute(outf);
+
+                //这里task
+                if(TextUtils.isEmpty(a1.trim())){
+                    Toast.makeText(ChekoutActivity.this,"收货电话不能为空！",Toast.LENGTH_SHORT).show();
+                }else if(TextUtils.isEmpty(a2.trim())){
+                    Toast.makeText(ChekoutActivity.this,"配送时间不能为空！",Toast.LENGTH_SHORT).show();
+                }else if(TextUtils.isEmpty(a3.trim())){
+                    Toast.makeText(ChekoutActivity.this,"收货地址不能为空！",Toast.LENGTH_SHORT).show();
+                }else{
+//                    Toast.makeText(ChekoutActivity.this,outf,Toast.LENGTH_SHORT).show();
+                    OutFoodTask outFood = new OutFoodTask();
+                    outFood.execute(outf);
+                }
 
             }
         });

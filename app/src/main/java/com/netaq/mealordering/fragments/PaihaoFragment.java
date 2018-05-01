@@ -109,6 +109,9 @@ public class PaihaoFragment extends android.support.v4.app.Fragment{
 
             Toast.makeText(getActivity(),"您的取号为： "+sss,Toast.LENGTH_SHORT).show();
 
+            Intent i = getActivity().getIntent();
+            startActivity(i);
+
 //            wodereserveFragment re = new wodereserveFragment(reserves);
 //            FragmentTransaction ft = person.getChildFragmentManager().beginTransaction();
 //            ft.replace(R.id.bottom_info,re).commit();
