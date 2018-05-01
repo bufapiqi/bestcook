@@ -287,11 +287,13 @@ public class netWorkCon {
 
     public int OutFood(String outFood) throws  IOException{
 
+//        String ppp = URLEncoder.encode(outFood,"UTF-8");
+
         Log.i("oijnoijnoiujn",outFood);
 
-        StringEntity stringEntity = new StringEntity(outFood);
-        stringEntity.setContentType(HTTP.UTF_8);
-        stringEntity.setContentType("application/json;charset=utf-8");
+        StringEntity stringEntity = new StringEntity(outFood,"UTF-8");
+//        stringEntity.setContentType(HTTP.UTF_8);
+        stringEntity.setContentType("application/json");
 //        stringEntity.setContentEncoding(HTTP.UTF_8);
 
         HttpClient httpClient = new DefaultHttpClient();
@@ -319,8 +321,8 @@ public class netWorkCon {
 
     public int UpdateUser(String userInfo) throws IOException{
 
-        StringEntity stringEntity = new StringEntity(userInfo);
-        stringEntity.setContentType(HTTP.UTF_8);
+        StringEntity stringEntity = new StringEntity(userInfo,"UTF-8");
+//        stringEntity.setContentType(HTTP.UTF_8);
         stringEntity.setContentType("application/json");
 
         HttpClient httpClient = new DefaultHttpClient();

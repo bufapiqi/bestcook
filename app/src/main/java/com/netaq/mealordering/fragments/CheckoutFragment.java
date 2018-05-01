@@ -104,12 +104,12 @@ public class CheckoutFragment extends Fragment {
                 outfood.setDescription(beizhu.getText().toString()); // 备注
 
                 Gson g = new Gson();
-                String outf = "";
-                try {
-                    outf = URLEncoder.encode(g.toJson(outfood),"UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
+                String outf = g.toJson(outfood);
+//                try {
+//                    outf = URLEncoder.encode(g.toJson(outfood),"UTF-8");
+//                } catch (UnsupportedEncodingException e) {
+//                    e.printStackTrace();
+//                }
 
                 String a1 = checkphone.getText().toString();
                 String a2 = peisong.getText().toString();

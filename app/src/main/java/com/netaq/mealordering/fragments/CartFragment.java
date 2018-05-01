@@ -59,7 +59,19 @@ public class CartFragment extends Fragment implements CartAdapter.onQuantityModi
 //        deliveryTotal.setText("0 Dhs.");
 
         //    call Caradapter and pass cart arrayList of orders
+        Intent i = getActivity().getIntent();
+        Bundle bundle = i.getExtras();
+        boolean isLogin = false;
+        if(bundle != null && bundle.containsKey("username")){
+            isLogin = true;
+        }
+
+        if(!isLogin){
+            MenuItems.orderList = new ArrayList<MenuItems>();
+        }
+
         orderList = MenuItems.getOrderList();
+
         CartAdapter cartAdapter = new CartAdapter(orderList);
         cartAdapter.setQuantityModificationInterface(this);
 

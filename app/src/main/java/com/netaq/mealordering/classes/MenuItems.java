@@ -84,4 +84,5 @@ public class MenuItems implements Serializable
     public void setImage(String image) {
         this.image = image;
     }
+
 }
