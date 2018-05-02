@@ -1,11 +1,15 @@
 package com.netaq.mealordering.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,8 +126,11 @@ public class OrderMealFragment extends android.support.v4.app.Fragment{
         @Override
         protected void onPostExecute(Boolean bool) {
 
-            if (bool){
-                Toast.makeText(getActivity(),"订餐失败！",Toast.LENGTH_SHORT).show();
+            Log.i("什么鬼",bool.booleanValue()+"");
+
+            if (!bool.booleanValue()){
+//                Toast.makeText(getActivity(),"订餐失败！",Toast.LENGTH_SHORT).show();
+                showDialog();
             }else{
                 Toast.makeText(getActivity(),"订餐成功！",Toast.LENGTH_SHORT).show();
                 Intent i = getActivity().getIntent();
@@ -134,6 +141,34 @@ public class OrderMealFragment extends android.support.v4.app.Fragment{
 //            FragmentTransaction ft = person.getChildFragmentManager().beginTransaction();
 //            ft.replace(R.id.bottom_info,re).commit();
 
+        }
+
+        private void showDialog(){
+            final AlertDialog.Builder dia = new AlertDialog.Builder(getActivity());
+            dia.setTitle("订餐失败！");
+            dia.setMessage("您的订餐没有座位了，请您选择排号或者外卖，谢谢您的光顾！");
+            dia.setPositiveButton("点击排号", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Fragment paihao = new PaihaoFragment();
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.content_main,paihao);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
+            });
+
+            dia.setNegativeButton("点击外卖", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Fragment fragment =  new MainMenuFragment();
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.content_main,fragment);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
+            });
+            dia.show();
         }
     }
 
