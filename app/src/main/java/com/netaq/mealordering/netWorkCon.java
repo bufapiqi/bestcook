@@ -3,10 +3,8 @@ package com.netaq.mealordering;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpEntity;
@@ -28,6 +26,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+
 ;
 
 /**
@@ -38,7 +37,7 @@ public class netWorkCon {
 
     private static final String TAG = "entity.netWorkCon";
 
-    private static final String Basic_URL = "http://192.168.1.110:8080";// api
+    private static final String Basic_URL = "http://192.168.1.108:8080";// api
 
     private static final String Login_URL = Basic_URL + "/login";  //可以组合成不同的URL
     private static final String Register_URL = Basic_URL + "/register";
@@ -260,8 +259,9 @@ public class netWorkCon {
         Gson gson = new Gson();
 
         String a = EntityUtils.toString(httpResponse.getEntity());
-
-        return Boolean.getBoolean(a);
+        Log.i("direct",a);
+        Log.i("indirect",Boolean.valueOf(a)+"");
+        return Boolean.valueOf(a);
     }
 
     public String getCode(String time,int mans,String name,String phone,int userid) throws IOException{  //排号的url

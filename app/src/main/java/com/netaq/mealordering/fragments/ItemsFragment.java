@@ -1,9 +1,6 @@
 package com.netaq.mealordering.fragments;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,11 +12,8 @@ import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 import com.netaq.mealordering.R;
-import com.netaq.mealordering.activity.MainActivity;
 import com.netaq.mealordering.adapters.menuItem.MenuItemsAdapter;
 import com.netaq.mealordering.classes.MenuItems;
-
-import java.util.ArrayList;
 
 import developer.shivam.perfecto.OnNetworkRequest;
 import developer.shivam.perfecto.Perfecto;
@@ -57,7 +51,7 @@ public class ItemsFragment extends Fragment {
 //
             case 0:
                 Perfecto.with(getContext())
-                        .fromUrl(" http://192.168.1.110:8080/getFood?storeid=1")  //https://api.myjson.com/bins/18sabx
+                        .fromUrl(" http://192.168.1.108:8080/getFood?storeid=1")  //https://api.myjson.com/bins/18sabx
                         .ofTypeGet()
                         .connect(new OnNetworkRequest() {
                             @Override
@@ -99,7 +93,7 @@ public class ItemsFragment extends Fragment {
 
 
                 Perfecto.with(getContext())
-                        .fromUrl(" http://192.168.1.104:8080/getFood2?storeid=1") // https://api.myjson.com/bins/19z5jh
+                        .fromUrl(" http://192.168.1.108:8080/getFood2?storeid=1") // https://api.myjson.com/bins/19z5jh
                         .ofTypeGet()
                         .connect(new OnNetworkRequest() {
                             @Override
@@ -136,7 +130,7 @@ public class ItemsFragment extends Fragment {
 
         case 2:
                 Perfecto.with(getContext())
-                        .fromUrl("http://192.168.1.104:8080/getFood3?storeid=1")  //https://api.myjson.com/bins/wth2l
+                        .fromUrl("http://192.168.1.108:8080/getFood3?storeid=1")  //https://api.myjson.com/bins/wth2l
                         .ofTypeGet()
                         .connect(new OnNetworkRequest() {
                             @Override
@@ -169,7 +163,7 @@ public class ItemsFragment extends Fragment {
             case 3:
 
                 Perfecto.with(getContext())
-                       .fromUrl("http://192.168.1.104:8080/getFood4?storeid=1")  //https://api.myjson.com/bins/a7031
+                       .fromUrl("http://192.168.1.108:8080/getFood4?storeid=1")  //https://api.myjson.com/bins/a7031
                         .ofTypeGet()
                         .connect(new OnNetworkRequest() {
                             @Override
@@ -203,7 +197,7 @@ public class ItemsFragment extends Fragment {
 
             case 4:
                 Perfecto.with(getContext())
-                        .fromUrl("http://192.168.1.104:8080/getFood5?storeid=1") //https://api.myjson.com/bins/16zzil
+                        .fromUrl("http://192.168.1.108:8080/getFood5?storeid=1") //https://api.myjson.com/bins/16zzil
                         .ofTypeGet()
                         .connect(new OnNetworkRequest() {
                             @Override
