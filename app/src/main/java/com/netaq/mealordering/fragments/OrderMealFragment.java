@@ -4,10 +4,14 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,11 +25,9 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.netaq.mealordering.R;
-import com.netaq.mealordering.Reserve;
 import com.netaq.mealordering.netWorkCon;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by RABOOK on 2018/4/29.
@@ -60,13 +62,14 @@ public class OrderMealFragment extends android.support.v4.app.Fragment{
         String dingcanrenshu = dingcanEdit.getText().toString(); //预订的人数
 
         dingcanBt.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
 
                 final String dingcanrenshu = dingcanEdit.getText().toString();
 
                 int year = dingcanpicker.getYear();
-                int month = dingcanpicker.getMonth();
+                int month = dingcanpicker.getMonth()+1;
                 int day = dingcanpicker.getDayOfMonth();
 
                 int h = tppick.getHour();
@@ -102,6 +105,7 @@ public class OrderMealFragment extends android.support.v4.app.Fragment{
         return view;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     private class ReserveTask extends AsyncTask<String,Void,Boolean> {
 
         @Override
@@ -114,6 +118,7 @@ public class OrderMealFragment extends android.support.v4.app.Fragment{
             try{
                 isReserve = net.reserve(strings[0],Integer.parseInt(strings[1]),strings[2],strings[3],
                         strings[4],Integer.parseInt(strings[5]));
+                Log.i("isreserve",isReserve+"");
             }catch (IOException e){
                 e.printStackTrace();
             }finally {
@@ -126,21 +131,26 @@ public class OrderMealFragment extends android.support.v4.app.Fragment{
         @Override
         protected void onPostExecute(Boolean bool) {
 
-            Log.i("什么鬼",bool.booleanValue()+"");
+            Log.i("什么鬼", bool.booleanValue() + "");
 
-            if (!bool.booleanValue()){
+            if (!bool.booleanValue()) {
 //                Toast.makeText(getActivity(),"订餐失败！",Toast.LENGTH_SHORT).show();
                 showDialog();
-            }else{
-                Toast.makeText(getActivity(),"订餐成功！",Toast.LENGTH_SHORT).show();
-                Intent i = getActivity().getIntent();
-                startActivity(i);
-            }  //这里可能需要改一下
+                Log.i("returnsth", bool + "");
+                if (!bool) {
+                    Toast.makeText(getActivity(), "您所预订的桌子数目不足！", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    Toast.makeText(getActivity(), "订餐成功！", Toast.LENGTH_SHORT).show();
+                    Intent i = getActivity().getIntent();
+                    startActivity(i);
+                }  //这里可能需要改一下
 
 //            wodereserveFragment re = new wodereserveFragment(reserves);
 //            FragmentTransaction ft = person.getChildFragmentManager().beginTransaction();
 //            ft.replace(R.id.bottom_info,re).commit();
 
+            }
         }
 
         private void showDialog(){
